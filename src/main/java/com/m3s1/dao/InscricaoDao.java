@@ -1,5 +1,6 @@
 package com.m3s1.dao;
 
+import com.m3s1.exception.RegistroExistenteException;
 import com.m3s1.exception.RegistroNaoEncontradoException;
 import com.m3s1.model.Inscricao;
 
@@ -18,6 +19,7 @@ public class InscricaoDao implements Serializable {
     EntityManager em;
 
     public void salvar(Inscricao inscricao) {
+        verificaInscricaoDuplicada(inscricao);
         em.persist(inscricao);
     }
 
@@ -36,5 +38,12 @@ public class InscricaoDao implements Serializable {
     public void deletar(Integer id) {
         Inscricao inscricao = obter(id);
         em.remove(inscricao);
+    }
+    
+    private void verificaInscricaoDuplicada(Inscricao inscricao) {
+        List<Inscricao> inscricoes = obterTodos();
+        boolean matriculaDuplicada = inscricoes.stream().anyMatch(i -> i.equals(inscricao));
+        if (matriculaDuplicada)
+            throw new RegistroExistenteException("Inscrição", inscricao.getAluno().getMatricula().toString() + " - " + inscricao.getCurso().getCodigo());
     }
 }

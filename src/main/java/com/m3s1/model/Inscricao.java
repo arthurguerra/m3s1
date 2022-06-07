@@ -1,6 +1,7 @@
 package com.m3s1.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "INSCRICAO")
@@ -25,6 +26,19 @@ public class Inscricao {
         this.id = id;
         this.aluno = aluno;
         this.curso = curso;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Inscricao inscricao = (Inscricao) o;
+        return aluno.equals(inscricao.aluno) && curso.equals(inscricao.curso);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(aluno, curso);
     }
 
     public Integer getId() {

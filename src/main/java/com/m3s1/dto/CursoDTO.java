@@ -17,6 +17,11 @@ public class CursoDTO implements Serializable {
     public CursoDTO() {
     }
 
+    public CursoDTO(String assunto, Integer duracao) {
+        this.assunto = assunto;
+        this.duracao = duracao;
+    }
+
     public CursoDTO(String codigo, String assunto, Integer duracao) {
         this.codigo = codigo;
         this.assunto = assunto;

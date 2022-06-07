@@ -1,6 +1,5 @@
 package com.m3s1.dao;
 
-import com.m3s1.exception.RegistroNaoEncontradoException;
 import com.m3s1.model.Aluno;
 
 import javax.enterprise.context.RequestScoped;
@@ -12,6 +11,7 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestScoped
 @Transactional
@@ -34,21 +34,16 @@ public class AlunoDao implements Serializable {
         }
     }
 
-    public Aluno obterPorMatricula(Integer matricula) {
+    public Optional<Aluno> obterPorMatricula(Integer matricula) {
         Aluno aluno = em.find(Aluno.class, matricula);
-        if (aluno == null)
-            throw new RegistroNaoEncontradoException("Aluno", matricula.toString());
-
-        return aluno;
+        return aluno != null ? Optional.of(aluno) : Optional.empty();
     }
 
-    public void deletar(Integer matricula) {
-        Aluno aluno = obterPorMatricula(matricula);
+    public void deletar(Aluno aluno) {
         em.remove(aluno);
     }
 
-    public void atualizar(Aluno alterado) {
-        Aluno aluno = obterPorMatricula(alterado.getMatricula());
+    public void atualizar(Aluno alterado, Aluno aluno) {
         aluno.setNome(alterado.getNome());
         em.merge(aluno);
     }

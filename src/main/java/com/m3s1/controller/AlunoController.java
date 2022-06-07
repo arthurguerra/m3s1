@@ -3,7 +3,12 @@ package com.m3s1.controller;
 import com.m3s1.dto.AlunoDTO;
 import com.m3s1.mapper.AlunoMapper;
 import com.m3s1.model.Aluno;
+import com.m3s1.security.Authorize;
 import com.m3s1.service.AlunoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -22,6 +27,13 @@ public class AlunoController {
     @Inject
     private AlunoService service;
 
+    @Operation( summary = "Criar Aluno", description = "Criação de Aluno",
+            responses = {
+                    @ApiResponse( responseCode = "201", description = "Aluno cadastrado",
+                            content = {@Content( schema = @Schema(implementation = AlunoDTO.class) ) }),
+                    @ApiResponse( responseCode = "400", description = "Request inválida" )
+            })
+    @Authorize
     @POST
     public Response inserir(@Valid AlunoDTO alunoDTO) {
         Aluno aluno = AlunoMapper.INSTANCE.toModel(alunoDTO);
@@ -33,6 +45,7 @@ public class AlunoController {
                 .build();
     }
 
+    @Authorize
     @PUT
     @Path("/{matricula}")
     public Response alterar(@PathParam("matricula") Integer matricula, @Valid AlunoDTO alunoDTO) {
@@ -42,6 +55,7 @@ public class AlunoController {
         return Response.ok(aluno).build();
     }
 
+    @Authorize
     @DELETE
     @Path("/{matricula}")
     public Response remover(@PathParam("matricula") Integer matricula) {
