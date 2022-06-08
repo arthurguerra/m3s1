@@ -25,8 +25,8 @@ public class AlunoService {
     }
 
     public void excluir(Integer matricula) {
-        Aluno aluno = obter(matricula);
-        alunoDao.deletar(aluno);
+        obter(matricula);
+        alunoDao.deletar(matricula);
     }
 
     public List<Aluno> obter(String nomePesquisa) {

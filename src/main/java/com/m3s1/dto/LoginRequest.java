@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 
-@Schema(name = "Login Requisição    ")
+@Schema(name = "Login Requisição")
 public class LoginRequest {
 
     @NotNull(message = "Campo Obrigatório: email")

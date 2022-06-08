@@ -39,8 +39,9 @@ public class AlunoDao implements Serializable {
         return aluno != null ? Optional.of(aluno) : Optional.empty();
     }
 
-    public void deletar(Aluno aluno) {
-        em.remove(aluno);
+    public void deletar(Integer matricula) {
+        Optional<Aluno> aluno = obterPorMatricula(matricula);
+        em.remove(aluno.get());
     }
 
     public void atualizar(Aluno alterado, Aluno aluno) {
