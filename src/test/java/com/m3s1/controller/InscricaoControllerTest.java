@@ -1,6 +1,5 @@
 package com.m3s1.controller;
 
-import com.m3s1.dto.CursoDTO;
 import com.m3s1.dto.InscricaoReqDTO;
 import com.m3s1.dto.InscricaoRespDTO;
 import com.m3s1.exception.RegistroNaoEncontradoException;
@@ -17,10 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
